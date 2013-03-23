@@ -38,7 +38,7 @@ public class ApacheLogParser {
         }
     }
 
-    protected long parseTimestamp(String timeAsString) throws ParserException {
+    public long parseTimestamp(String timeAsString) throws ParserException {
         try{
             return simpleDateFormat.parse(timeAsString).getTime();
         }catch (Exception e){
