@@ -24,7 +24,7 @@ public class AccessLogReducerTest {
     public void runReducer(){
         LoggedRequest loggedRequest = new LoggedRequest(123l, "/someResource/", 200);
         driver.setReducer(reducer);
-        driver.withInput(loggedRequest, Arrays.asList(new LongWritable[]{new LongWritable(1),new LongWritable(2),new LongWritable(3)}))
+        driver.withInput(loggedRequest, Arrays.asList(new LongWritable(1),new LongWritable(2),new LongWritable(3)))
               .withOutput(NullWritable.get(), reducer.prettyPrint(loggedRequest, 6))
               .runTest();
     }

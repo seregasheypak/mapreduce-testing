@@ -20,9 +20,9 @@ public class UtilTest {
 
     @Test
     public void trimTimestamps() throws ParserException {
-        verifyResult(Util.trimMinutes(parser.parseTimestamp("03/Jul/1995:10:49:40")), 1995, 06, 03, 10);
-        verifyResult(Util.trimMinutes(parser.parseTimestamp("03/Jul/1995:01:00:40")), 1995, 06, 03, 01);
-        verifyResult(Util.trimMinutes(parser.parseTimestamp("31/Dec/1995:00:00:00")), 1995, 11, 31, 00);
+        verifyResult(Util.trimMinutes(parser.parseTimestamp("03/Jul/1995:10:49:40")), 1995, 6, 3, 10);
+        verifyResult(Util.trimMinutes(parser.parseTimestamp("03/Jul/1995:01:00:40")), 1995, 6, 3, 1);
+        verifyResult(Util.trimMinutes(parser.parseTimestamp("31/Dec/1995:00:00:00")), 1995, 11, 31, 0);
     }
 
     private void verifyResult(long result, int year, int month, int day, int hour){

@@ -55,6 +55,6 @@ public class ApacheLogParser {
         if(matcher.matches()){
             return new String[]{matcher.group(DATE_GROUP), matcher.group(REQUEST_GROUP), matcher.group(CODE_GROUP)};
         }
-        throw new ParserException(String.format("Input line [s%] doesn't match provided regex [%s]", inputLine, pattern.pattern()));
+        throw new ParserException(String.format("Input line [%s] doesn't match provided regex [%s]", inputLine, pattern.pattern()));
     }
 }
