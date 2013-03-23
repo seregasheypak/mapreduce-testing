@@ -25,7 +25,7 @@ import static org.hamcrest.Matchers.equalTo;
 public class AccessLogParserMapperTest {
 
     private final AccessLogParserMapper mapper = new AccessLogParserMapper();
-    private final MapDriver<LongWritable, Text, LoggedRequest, IntWritable> mapDriver = new MapDriver();
+    private final MapDriver<LongWritable, Text, LoggedRequest, IntWritable> mapDriver = new MapDriver<LongWritable, Text, LoggedRequest, IntWritable>();
     private final ApacheLogParser parser = new ApacheLogParser();
 
     private final LongWritable key = new LongWritable(1);
