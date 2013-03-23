@@ -2,6 +2,8 @@ package ru.develbureau.mrtesting.model;
 
 import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
@@ -82,6 +84,10 @@ public class LoggedRequest implements WritableComparable<LoggedRequest>{
                                      .append(this.getReplyCode(), other.getReplyCode())
                                      .append(this.getRequest(), other.getRequest())
                                      .build();
+    }
+
+    public String toString(){
+        return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
     }
 
     @Override
