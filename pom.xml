@@ -31,48 +31,6 @@
         <finalName>${project.artifactId}-${project.version}</finalName>
         <pluginManagement>
             <plugins>
-                <!--
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-pmd-plugin</artifactId>
-                    <version>2.7.1</version>
-                    <configuration>
-                        <format>xml</format>
-                        <targetJdk>1.6</targetJdk>
-                        <linkXRef>false</linkXRef>
-                        <includeTests>true</includeTests>
-                        <rulesets>
-                            <ruleset>
-                                ${rule.repository.url}/pmd/rules/pmd-rules/1.0.4/pmd-rules-1.0.4.xml
-                            </ruleset>
-                        </rulesets>
-                        <excludes>
-                            <exclude>**/HttpRequest.java</exclude>
-                        </excludes>
-                    </configuration>
-
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-checkstyle-plugin</artifactId>
-                    <version>2.9.1</version>
-                    <executions>
-                        <execution>
-                            <id>checkstyle</id>
-                            <phase>install</phase>
-                            <goals>
-                                <goal>checkstyle</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                    <configuration>
-                        <includeTestSourceDirectory>true</includeTestSourceDirectory>
-                        <configLocation>
-                            ${rule.repository.url}/checkstyle/rules/checkstyle-rules/1.0.3/checkstyle-rules-1.0.3.xml
-                        </configLocation>
-                    </configuration>
-                </plugin>
-                -->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
