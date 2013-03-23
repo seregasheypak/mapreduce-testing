@@ -28,11 +28,9 @@ public class ApacheLogParser {
     public LoggedRequest parse(String inputLine) throws ParserException{
         try{
             String[] capturedGroups = splitByGroups(inputLine);
-            LoggedRequest loggedRequest = new LoggedRequest(parseTimestamp(capturedGroups[TIMESTAMP_NUM]),
-                                                            parseRequest(capturedGroups[REQ_NUM]),
-                                                            Integer.valueOf(capturedGroups[CODE_NUM]));
-            return loggedRequest;
-
+            return new LoggedRequest(parseTimestamp(capturedGroups[TIMESTAMP_NUM]),
+                                                    parseRequest(capturedGroups[REQ_NUM]),
+                                                    Integer.valueOf(capturedGroups[CODE_NUM]));
         }catch (Exception e){
             throw new ParserException("Error while parsing apache log line", e);
         }
