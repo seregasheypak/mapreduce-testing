@@ -1,6 +1,5 @@
 package ru.develbureau.mrtesting.mapreduce;
 
-import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.mapreduce.Reducer;
 import ru.develbureau.mrtesting.model.LoggedRequest;
