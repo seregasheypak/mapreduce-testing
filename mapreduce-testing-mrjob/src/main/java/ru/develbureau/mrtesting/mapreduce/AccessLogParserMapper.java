@@ -9,6 +9,7 @@ import org.apache.hadoop.mapreduce.Mapper;
 import ru.develbureau.mrtesting.model.Counter;
 import ru.develbureau.mrtesting.model.LoggedRequest;
 import ru.develbureau.mrtesting.parser.ApacheLogParser;
+import ru.develbureau.mrtesting.util.Util;
 
 /**
  * User: sergey.sheypak
@@ -29,6 +30,7 @@ public class AccessLogParserMapper extends Mapper<LongWritable, Text, LoggedRequ
             if(loggedRequest.getReplyCode().equals(500)){
                 context.getCounter(Counter.SERVER_ERROR_500).increment(1);
             }else{
+                loggedRequest.setTimestamp(Util.trimMinutes(loggedRequest.getTimestamp()));
                 context.write(loggedRequest,one);
             }
         }

@@ -35,7 +35,7 @@ public class AccessLogParserMapperTest {
     public void mapWithGoodRecord() throws ParserException{
         mapDriver.setMapper(mapper);
         mapDriver.withInput(key, new Text("205.189.154.54 - - [01/Jul/1995:00:00:29 -0400] \"GET /shuttle/countdown/count.gif HTTP/1.0\" 200 40310"))
-                 .withOutput(new LoggedRequest(parser.parseTimestamp("01/Jul/1995:00:00:29"), "/shuttle/countdown/count.gif", 200), one)
+                 .withOutput(new LoggedRequest(parser.parseTimestamp("01/Jul/1995:00:00:00"), "/shuttle/countdown/count.gif", 200), one)
                  .runTest();
     }
 

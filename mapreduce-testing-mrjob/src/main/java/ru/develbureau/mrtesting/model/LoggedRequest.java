@@ -52,6 +52,10 @@ public class LoggedRequest implements WritableComparable<LoggedRequest>{
         return replyCode.get();
     }
 
+    public void setTimestamp(long newTimestamp){
+        this.timestamp.set(newTimestamp);
+    }
+
     @Override
     public int hashCode(){
         return getTimestamp().hashCode();
