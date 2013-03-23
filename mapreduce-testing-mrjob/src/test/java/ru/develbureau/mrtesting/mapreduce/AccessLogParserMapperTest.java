@@ -25,11 +25,11 @@ import static org.hamcrest.Matchers.equalTo;
 public class AccessLogParserMapperTest {
 
     private final AccessLogParserMapper mapper = new AccessLogParserMapper();
-    private final MapDriver<LongWritable, Text, LoggedRequest, IntWritable> mapDriver = new MapDriver<LongWritable, Text, LoggedRequest, IntWritable>();
+    private final MapDriver<LongWritable, Text, LoggedRequest, LongWritable> mapDriver = new MapDriver<LongWritable, Text, LoggedRequest, LongWritable>();
     private final ApacheLogParser parser = new ApacheLogParser();
 
     private final LongWritable key = new LongWritable(1);
-    private final IntWritable one = new IntWritable(1);
+    private final LongWritable one = new LongWritable(1);
 
     @Test
     public void mapWithGoodRecord() throws ParserException{
@@ -42,7 +42,7 @@ public class AccessLogParserMapperTest {
     @Test
     public void mapWithBadRecord() throws ParserException, IOException{
         mapDriver.setMapper(mapper);
-        List<Pair<LoggedRequest, IntWritable>> pair = mapDriver
+        List<Pair<LoggedRequest, LongWritable>> pair = mapDriver
                  .withInput(key, new Text("205.189.154.54 - - [01/Jul/1995 -0400] \"GET /shuttle/countdown/count.gif HTTP/1.0\" 200 40310"))
                  .run();
         assertThat(pair.size(), equalTo(0));
@@ -53,7 +53,7 @@ public class AccessLogParserMapperTest {
     @Test
     public void mapWithReplyCode500() throws ParserException, IOException{
         mapDriver.setMapper(mapper);
-        List<Pair<LoggedRequest, IntWritable>> pair = mapDriver
+        List<Pair<LoggedRequest, LongWritable>> pair = mapDriver
                 .withInput(key, new Text("63.205.1.45 - - [03/Jul/1995:10:49:40 -0400] \"GET /cgi-bin/geturlstats.pl HTTP/1.0\" 500 0"))
                 .run();
         assertThat(pair.size(), equalTo(0));

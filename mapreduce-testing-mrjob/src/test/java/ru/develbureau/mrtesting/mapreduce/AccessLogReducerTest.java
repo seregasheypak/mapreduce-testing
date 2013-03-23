@@ -1,6 +1,6 @@
 package ru.develbureau.mrtesting.mapreduce;
 
-import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.NullWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mrunit.mapreduce.ReduceDriver;
@@ -17,14 +17,14 @@ import java.util.Arrays;
 public class AccessLogReducerTest {
 
     private final AccessLogReducer reducer = new AccessLogReducer();
-    private final ReduceDriver<LoggedRequest, IntWritable, NullWritable, Text> driver = new ReduceDriver<LoggedRequest, IntWritable, NullWritable, Text>();
+    private final ReduceDriver<LoggedRequest, LongWritable, NullWritable, Text> driver = new ReduceDriver<LoggedRequest, LongWritable, NullWritable, Text>();
 
 
     @Test
     public void runReducer(){
         LoggedRequest loggedRequest = new LoggedRequest(123l, "/someResource/", 200);
         driver.setReducer(reducer);
-        driver.withInput(loggedRequest, Arrays.asList(new IntWritable[]{new IntWritable(1),new IntWritable(2),new IntWritable(3)}))
+        driver.withInput(loggedRequest, Arrays.asList(new LongWritable[]{new LongWritable(1),new LongWritable(2),new LongWritable(3)}))
               .withOutput(NullWritable.get(), reducer.prettyPrint(loggedRequest, 6))
               .runTest();
     }
