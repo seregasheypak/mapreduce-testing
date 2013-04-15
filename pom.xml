@@ -12,6 +12,7 @@
 
     <modules>
         <module>mapreduce-testing-mrjob</module>
+        <module>mapreduce-testing-mini-mr-cluster</module>
     </modules>
 
     <properties>
