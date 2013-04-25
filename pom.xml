@@ -269,6 +269,11 @@
                 <version>6.8</version>
                 <scope>test</scope>
             </dependency>
+            <dependency>
+                <groupId>org.apache.hive</groupId>
+                <artifactId>hive-jdbc</artifactId>
+                <version>${hadoop.hive.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 </project>
