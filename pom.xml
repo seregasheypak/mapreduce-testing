@@ -13,6 +13,7 @@
     <modules>
         <module>mapreduce-testing-mrjob</module>
         <module>mapreduce-testing-mini-mr-cluster</module>
+        <module>hive-sql-builder</module>
     </modules>
 
     <properties>
