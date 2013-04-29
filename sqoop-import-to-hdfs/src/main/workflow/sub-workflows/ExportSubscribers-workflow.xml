@@ -1,0 +1,82 @@
+<workflow-app name="ExportSubscribers-workflow" xmlns="uri:oozie:workflow:0.3">
+    <start to="ExportSubscribers-workflow-run" />
+    <action name="ExportSubscribers-workflow-run">
+        <sqoop xmlns="uri:oozie:sqoop-action:0.2">
+            <job-tracker>${jobTracker}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <configuration>
+                <property>
+                    <name>oozie.use.system.libpath</name>
+                    <value>true</value>
+                </property>
+                <property>
+                    <name>queueName</name>
+                    <value>default</value>
+                </property>
+                <property>
+                    <name>mapred.map.max.attempts</name>
+                    <value>1</value>
+                </property>
+            </configuration>
+            <arg>import</arg>
+
+            <arg>--connect</arg>
+            <arg>jdbc:oracle:thin:@my_oracle_server.com:1521/DWH</arg>
+
+            <arg>--username</arg>
+            <arg>my_dwh_user</arg>
+
+            <arg>--password</arg>
+            <arg>my_dwh_user_password</arg>
+
+            <arg>--table</arg>
+            <arg>${dwhTableName}</arg><!-- test: DWMO.D_SUBS_RATEPLANS,  target: DWMO.S_SUBSCRIBERS-->
+
+            <arg>--columns</arg>
+            <arg>"subs_id,msisdn"</arg>
+
+            <arg>--where</arg> <!-- REMOVE ROWNUM &lt; 100 AND  -->
+            <arg>"some_field = 3 and other_field=5"</arg>
+
+            <arg>--target-dir</arg>
+            <arg>${outputDir}</arg>
+
+            <arg>--fields-terminated-by</arg>
+            <arg>|</arg>
+
+            <arg>-m</arg>
+            <arg>1</arg>
+
+            <arg>--compress</arg>
+
+            <arg>--compression-codec</arg>
+            <arg>org.apache.hadoop.io.compress.BZip2Codec</arg>
+        </sqoop>
+
+
+        <ok to="copyToActual"/>
+        <error to="kill"/>
+    </action>
+
+    <action name="copyToActual">
+        <distcp xmlns="uri:oozie:distcp-action:0.1">
+            <job-tracker>${jobTracker}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <prepare>
+                <delete path="${nameNode}/masterdata/source/dwh/subscriber/actual"/>
+            </prepare>
+            <arg>-Dpool.name=distcp</arg>
+            <arg>-log</arg>
+            <arg>/tmp/${wf:id()}</arg>
+            <arg>${outputDir}/${sqoopResultFileName}</arg>
+            <arg>${nameNode}/masterdata/source/dwh/subscriber/actual/${sqoopResultFileName}</arg>
+        </distcp>
+        <ok to="job-workflow-end"/>
+        <error to="kill"/>
+    </action>
+    <kill name="kill">
+        <message>Sub-workflow failed with error message ${wf:errorMessage(wf:lastErrorNode())}</message>
+    </kill>
+
+    <end name="job-workflow-end" />
+</workflow-app>

@@ -1,0 +1,54 @@
+<coordinator-app name="ExportSubscribers-coordinator" frequency="${coord:days(1)}"
+                 start="${ExportSubscribersСoordinatorStart}" end="2113-01-01T00:02Z" timezone="${ExportSubscribersСoordinatorTimeZone}"  xmlns="uri:oozie:coordinator:0.3">
+    <controls>
+        <timeout>2</timeout>
+        <concurrency>1</concurrency>
+    </controls>
+
+    <datasets>
+        <dataset name="ExportSubscribersInputDataset" frequency="${coord:days(1)}" initial-instance="${ExportSubscribersСoordinatorStart}" timezone="${ExportSubscribersСoordinatorTimeZone}">
+            <uri-template>${nameNode}/staging/landing/source/dwh/subscriber</uri-template>
+            <done-flag>_PERSISTENT_FLAG</done-flag>
+        </dataset>
+        <dataset name="ExportSubscribersOutputDataset" frequency="${coord:days(1)}" initial-instance="${ExportSubscribersСoordinatorStart}" timezone="${ExportSubscribersСoordinatorTimeZone}">
+            <uri-template>${nameNode}/masterdata/source/dwh/subscriber/archive/${YEAR}/${MONTH}/${DAY}/${HOUR}</uri-template>
+            <done-flag></done-flag>
+        </dataset>
+    </datasets>
+
+    <input-events>
+        <data-in name="ExportSubscribersInputEvent" dataset="ExportSubscribersInputDataset">
+            <instance>${coord:current(0)}</instance>
+        </data-in>
+    </input-events>
+
+    <output-events>
+        <data-out name="ExportSubscribersOutputEvent" dataset="ExportSubscribersOutputDataset">
+            <instance>${coord:current(0)}</instance>
+        </data-out>
+    </output-events>
+    <action>
+        <workflow>
+            <app-path>${oozieAppHomeCatalog}/sub-workflows/ExportSubscribers-workflow.xml</app-path>
+            <configuration>
+                <property>
+                    <name>outputDir</name>
+                    <value>${coord:dataOut('ExportSubscribersOutputEvent')}</value>
+                </property>
+                <property>
+                    <name>oozie.use.system.libpath</name>
+                    <value>true</value>
+                </property>
+                <property>
+                    <name>dwhTableName</name>
+                    <value>${dwhTableName}</value>
+                </property>
+                <property>
+                    <name>sqoopResultFileName</name>
+                    <value>${sqoopResultFileName}</value>
+                </property>
+            </configuration>
+
+        </workflow>
+    </action>
+</coordinator-app>

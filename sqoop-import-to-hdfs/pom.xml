@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>sqoop-import-to-hdfs</artifactId>
+    <name>sqoop-import-to-hdfs</name>
+    <packaging>jar</packaging>
+
+    <parent>
+        <groupId>ru.develbureau</groupId>
+        <artifactId>mapreduce-testing</artifactId>
+        <version>1.0</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <configuration>
+                    <descriptor>src/main/assembly/job.xml</descriptor>
+                    <appendAssemblyId>false</appendAssemblyId>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+
+
+
+    <!-- Only for having Oozie xsd in you IDE classpath. This dependency is not needed for running Oozie app on server.-->
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.oozie</groupId>
+            <artifactId>oozie-client</artifactId>
+            <version>${hadoop.oozie.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- JDBC driver for connecting DWH server. Provide your own.
+             I've uploaded mine to our local maven repository.
+        -->
+        <!-- Assembly plugin will bundle this jar into zip. Zip should be extracted to HDFS. -->
+        <!--
+        <dependency>
+            <groupId>oracle.sql</groupId>
+            <artifactId>ojdbc6-for-sqoop</artifactId>
+        </dependency>
+        -->
+    </dependencies>
+
+</project>
