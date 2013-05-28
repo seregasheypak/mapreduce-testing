@@ -1,8 +1,10 @@
 package ru.develburau.mrtesting.movielens.model;
 
 import org.jooq.Field;
-import org.jooq.impl.Factory;
+import org.jooq.Table;
+import org.jooq.impl.DSL;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -12,6 +14,16 @@ import java.util.List;
  */
 public class Movie {
 
+    private static final String MOVIES = "movies";
+
+    public static final Field<Integer> ID      = DSL.fieldByName(Integer.class, MOVIES, "id");
+    public static final Field<String>  TITLE   = DSL.fieldByName(String.class,  MOVIES, "title");
+    public static final Field<String>  GENRES  = DSL.fieldByName(String.class,  MOVIES, "genres");
+
+
+    public static final Table<?> TABLE = DSL.tableByName(MOVIES);
+
+    private static final String GENRES_SEPARATOR = "\\|";
     private int id;
     private String title;
     private List<String> genres;
@@ -49,6 +61,12 @@ public class Movie {
         this.genres = genres;
     }
 
+    public void setGenres(String genres) {
+        if(genres!=null && !genres.isEmpty()){
+            this.genres = Arrays.asList(genres.split(GENRES_SEPARATOR));
+        }
+    }
+
     public int hashCode(){
         return Integer.valueOf(id).hashCode();
     }
@@ -63,30 +81,5 @@ public class Movie {
         if (id != movie.id) return false;
 
         return true;
-    }
-
-    public static enum SQL{
-
-            USER_ID("id", Integer.class )
-        ,   TITLE("title", String.class)
-        ,   GENRES("genres", String.class)
-        ;
-
-        private final String fieldName;
-
-        private final Class<?> fieldType;
-
-        SQL(String fieldName, Class<?> fieldType){
-            this.fieldName = fieldName;
-            this.fieldType = fieldType;
-        }
-
-        Field field(){
-            return Factory.fieldByName(fieldType, fieldName);
-        }
-
-        String fieldName(){
-            return fieldName;
-        }
     }
 }

@@ -3,7 +3,8 @@ package ru.develburau.mrtesting.movielens.model;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.jooq.Field;
-import org.jooq.impl.Factory;
+import org.jooq.Table;
+import org.jooq.impl.DSL;
 
 /**
  * User: sergey.sheypak
@@ -11,6 +12,15 @@ import org.jooq.impl.Factory;
  * Time: 14:32
  */
 public class Rating {
+
+    private static final String RATINGS = "ratings";
+
+    public static final Field<Integer>  USER_ID =   DSL.fieldByName(Integer.class,  RATINGS, "user_id");
+    public static final Field<Integer>  MOVIE_ID=   DSL.fieldByName(Integer.class,  RATINGS, "movie_id");
+    public static final Field<Double>    RATING =    DSL.fieldByName(Double.class,    RATINGS, "rating");
+    public static final Field<Long>     TSTAMP =    DSL.fieldByName(Long.class,     RATINGS, "tstamp");
+
+    public static final Table<?> TABLE = DSL.tableByName(RATINGS);
 
     private int userId;
     private int movieId;
@@ -79,31 +89,5 @@ public class Rating {
         }
 
         return false;
-    }
-
-    public static enum SQL{
-
-            USER_ID("userid", Integer.class )
-        ,   MOVIE_ID("movieid", Integer.class)
-        ,   RATING("rating", Float.class)
-        ,   TS("ts", Long.class)
-        ;
-
-        private final String fieldName;
-
-        private final Class<?> fieldType;
-
-        SQL(String fieldName, Class<?> fieldType){
-            this.fieldName = fieldName;
-            this.fieldType = fieldType;
-        }
-
-        Field field(){
-            return Factory.fieldByName(fieldType, fieldName);
-        }
-
-        String fieldName(){
-            return fieldName;
-        }
     }
 }

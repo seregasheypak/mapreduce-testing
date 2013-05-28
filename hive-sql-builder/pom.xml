@@ -15,7 +15,52 @@
     <packaging>jar</packaging>
     <description>A try to dynamically create hive queries using builder</description>
 
+    <build>
+        <testResources>
+            <testResource>
+                <directory>src/test/resources</directory>
+                <filtering>true</filtering>
+
+                <includes>
+                    <include>Create*Table.sql</include>
+                </includes>
+            </testResource>
+        </testResources>
+    </build>
+
+    <profiles>
+        <profile>
+            <id>itest</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-failsafe-plugin</artifactId>
+                        <configuration>
+                            <systemProperties>
+                                <path.to.source.data>../input_dataset/CommonHiveTesting</path.to.source.data>
+                                <url.to.source.data>http://www.grouplens.org/sites/www.grouplens.org/external_files/data/ml-10m.zip</url.to.source.data>
+                                <downloaded.source.file.name>ml-10m.zip</downloaded.source.file.name>
+                                <movies.file.from.zip>ml-10M100K/movies.dat</movies.file.from.zip>
+                                <ratings.file.from.zip>ml-10M100K/ratings.dat</ratings.file.from.zip>
+
+                                <url.rating.hive.jdbc.driver>org.apache.hadoop.hive.jdbc.HiveDriver</url.rating.hive.jdbc.driver>
+                                <url.rating.hive.jdbc.remote.url>jdbc:hive://</url.rating.hive.jdbc.remote.url>
+                                <project.build.directory>${project.build.directory}</project.build.directory>
+                            </systemProperties>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
     <dependencies>
+        <dependency>
+            <groupId>commons-dbutils</groupId>
+            <artifactId>commons-dbutils</artifactId>
+            <version>1.5</version>
+        </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
@@ -76,8 +121,17 @@
             <artifactId>hive-jdbc</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.apache.hive</groupId>
+            <artifactId>hive-builtins</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.jooq</groupId>
             <artifactId>jooq</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.hadoop</groupId>
+            <artifactId>hadoop-test</artifactId>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 
