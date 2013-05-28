@@ -14,13 +14,16 @@
         <module>mapreduce-testing-mrjob</module>
         <module>mapreduce-testing-mini-mr-cluster</module>
         <module>hive-sql-builder</module>
+        <module>sqoop-import-to-hdfs</module>
+        <module>sequencefile-rw</module>
     </modules>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <hadoop.version>2.0.0-cdh4.2.0</hadoop.version>
-        <hadoop.mr.version>2.0.0-mr1-cdh4.2.0</hadoop.mr.version>
-        <hadoop.hive.version>0.10.0-cdh4.2.0</hadoop.hive.version>
+        <hadoop.version>2.0.0-cdh4.2.1</hadoop.version>
+        <hadoop.mr.version>2.0.0-mr1-cdh4.2.1</hadoop.mr.version>
+        <hadoop.hive.version>0.10.0-cdh4.2.1</hadoop.hive.version>
+        <hadoop.oozie.version>3.3.0-cdh4.2.1</hadoop.oozie.version>
     </properties>
 
     <repositories>
@@ -153,7 +156,7 @@
             <dependency>
                 <groupId>org.apache.hive</groupId>
                 <artifactId>hive-jdbc</artifactId>
-                <version>0.9.0-cdh4.1.3</version>
+                <version>${hadoop.hive.version}</version>
             </dependency>
 
             <!-- hadoop -->
@@ -276,9 +279,14 @@
                 <version>${hadoop.hive.version}</version>
             </dependency>
             <dependency>
+                <groupId>org.apache.hive</groupId>
+                <artifactId>hive-builtins</artifactId>
+                <version>${hadoop.hive.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>org.jooq</groupId>
                 <artifactId>jooq</artifactId>
-                <version>2.6.0</version>
+                <version>3.0.0-RC3</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

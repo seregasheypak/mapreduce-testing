@@ -14,8 +14,6 @@ package org.apache.hadoop.net;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.conf.Configured;
-import org.apache.hadoop.net.DNSToSwitchMapping;
-import org.apache.hadoop.net.NetworkTopology;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,7 +23,7 @@ import java.util.Map;
 /**
  * This is a crooked nail for 2.0.0-mr1-cdh4.0.0 hadoop cluster work properly. StaticMapping class is missing while
  * starting MiniDFSCluster
- * Implements the {@link org.apache.hadoop.net.DNSToSwitchMapping} via static mappings. Used in testcases that simulate racks.
+ * Implements the {@link DNSToSwitchMapping} via static mappings. Used in testcases that simulate racks.
  */
 public class StaticMapping extends Configured implements DNSToSwitchMapping
 {
